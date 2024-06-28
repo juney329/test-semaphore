@@ -1,4 +1,5 @@
 - hosts: all
   gather_facts: no
+  become: yes
   roles:
     - ubuntu2004STIG

@@ -1,6 +1,6 @@
-- name: Test connectivity to remote hosts
-  hosts: all
-  gather_facts: no
+---
+
+- hosts: all
+  gather_facts: falose
   tasks:
-    - name: Ping the remote hosts
-      ping:
+    - ping:

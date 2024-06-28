@@ -40,13 +40,35 @@
     - ubuntu2004STIG_stigrule_238198_Manage
     - "'gdm3' in packages"
 # R-238200 UBTU-20-010005
+- name: Wait for apt lock to be free
+  shell: |
+    while fuser /var/lib/dpkg/lock >/dev/null 2>&1; do
+      echo "Waiting for apt to be available..."
+      sleep 5
+    done
+  register: apt_wait
+  retries: 5
+  delay: 10
+  until: apt_wait is succeeded
+
+- name: Wait for dpkg lock to be free
+  shell: |
+    while fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+      echo "Waiting for dpkg lock to be available..."
+      sleep 5
+    done
+  register: dpkg_wait
+  retries: 5
+  delay: 10
+  until: dpkg_wait is succeeded
+
 - name: stigrule_238200_vlock
   apt:
     name: vlock
     state: "{{ ubuntu2004STIG_stigrule_238200_vlock_State }}"
     update_cache: yes
   register: apt_status
-  until: apt_status is success
+  until: apt_status is succeeded
   retries: 12
   delay: 10
   when: ubuntu2004STIG_stigrule_238200_Manage

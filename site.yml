@@ -1,4 +1,4 @@
 - hosts: all
-  gather_facts: yes
+  gather_facts: no
   roles:
     - ubuntu2004STIG

@@ -1,0 +1,10 @@
+- name: Ensure /etc/aliases contains the correct root alias
+  hosts: all
+  tasks:
+    - name: Ensure root is aliased to darryl.payton@gmail.com
+      lineinfile:
+        path: /etc/aliases
+        regexp: '^root:'
+        line: 'root: darryl.payton@gmail.com'
+        create: yes
+      become: yes
